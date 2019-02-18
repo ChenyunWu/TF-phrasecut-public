@@ -51,7 +51,7 @@ def train(modelname, max_iter, snapshot, dataset, weights, setname, mu):
     snapshot_saver = tf.train.Saver(max_to_keep = 1000)
 
     sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
-    sess.run(tf.global_variables_initializer())
+    print(sess.run(tf.global_variables_initializer()))
     snapshot_loader.restore(sess, pretrained_model)
 
     reader = data_reader.DataReader(data_folder, data_prefix)
