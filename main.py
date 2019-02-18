@@ -30,13 +30,13 @@ def train(modelname, max_iter, snapshot, dataset, weights, setname, mu):
     avg_accuracy_all, avg_accuracy_pos, avg_accuracy_neg = 0, 0, 0
     decay = 0.99
     vocab_size = 8803 if dataset == 'referit' else 12112
-
-    if modelname == 'LSTM':
-        model = LSTM_model(mode='train', vocab_size=vocab_size, weights=weights)
-    elif modelname == 'RMI':
-        model = RMI_model(mode='train', vocab_size=vocab_size, weights=weights)
-    else:
-        raise ValueError('Unknown model name %s' % (modelname))
+    with tf.device('/device:GPU:0'):
+        if modelname == 'LSTM':
+            model = LSTM_model(mode='train', vocab_size=vocab_size, weights=weights)
+        elif modelname == 'RMI':
+            model = RMI_model(mode='train', vocab_size=vocab_size, weights=weights)
+        else:
+            raise ValueError('Unknown model name %s' % (modelname))
 
     if weights == 'resnet':
         pretrained_model = './external/TF-resnet/model/ResNet101_init.tfmodel'
@@ -44,11 +44,13 @@ def train(modelname, max_iter, snapshot, dataset, weights, setname, mu):
     elif weights == 'deeplab':
         pretrained_model = './external/TF-deeplab/model/ResNet101_train.tfmodel'
         load_var = {var.op.name: var for var in tf.global_variables() if var.op.name.startswith('DeepLab/group')}
+    else:
+        raise ValueError('Unknown weights %s' % (weights))
 
     snapshot_loader = tf.train.Saver(load_var)
     snapshot_saver = tf.train.Saver(max_to_keep = 1000)
 
-    sess = tf.Session()
+    sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
     sess.run(tf.global_variables_initializer())
     snapshot_loader.restore(sess, pretrained_model)
 
