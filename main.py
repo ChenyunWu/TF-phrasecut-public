@@ -50,7 +50,7 @@ def train(modelname, max_iter, snapshot, dataset, weights, setname, mu):
     snapshot_loader = tf.train.Saver(load_var)
     snapshot_saver = tf.train.Saver(max_to_keep = 1000)
 
-    sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
+    sess = tf.Session()
     sess.run(tf.global_variables_initializer())
     snapshot_loader.restore(sess, pretrained_model)
 
