@@ -232,7 +232,7 @@ if __name__ == "__main__":
     parser.add_argument('-t', type = str) # 'train' 'trainval' 'val' 'test' 'testA' 'testB'
 
     args = parser.parse_args()
-    os.environ['CUDA_VISIBLE_DEVICES'] = args.g
+    # os.environ['CUDA_VISIBLE_DEVICES'] = args.g
     mu = np.array((104.00698793, 116.66876762, 122.67891434))
 
     if args.m == 'train':
