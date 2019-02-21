@@ -1,8 +1,8 @@
 import numpy as np
 import tensorflow as tf
 import sys
-sys.path.append('./external/TF-resnet')
-sys.path.append('./external/TF-deeplab')
+sys.path.append('./_rmi/external/TF-resnet')
+sys.path.append('./_rmi/external/TF-deeplab')
 import resnet_model
 import deeplab_model
 
