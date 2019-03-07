@@ -30,10 +30,12 @@ class RMIRefVGLoader(RefVGLoader):
             img_id = np.random.choice(self.ref_img_ids)
             ref_data = self.get_img_ref_data(img_id)
             task_idx = np.random.choice(range(len(ref_data['phrases'])))
+            task_id = ref_data['task_ids'][task_idx]
         else:
             img_id = self.ref_img_ids[self.img_idx]
             ref_data = self.get_img_ref_data(img_id)
             task_idx = self.img_task_idx
+            task_id = ref_data['task_ids'][task_idx]
             if task_idx == len(ref_data['phrases']) - 1:
                 self.img_idx += 1
                 self.img_task_idx = 0
@@ -58,5 +60,5 @@ class RMIRefVGLoader(RefVGLoader):
 
         phrase_encoded = text_processing.preprocess_sentence(phrase, self.vocab_dict, self.phrase_len)
 
-        return img, mask, phrase, phrase_encoded
+        return img_id, task_id, img, mask, phrase, phrase_encoded
 

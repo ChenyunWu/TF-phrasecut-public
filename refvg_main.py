@@ -2,7 +2,6 @@ from __future__ import division
 
 import argparse
 import os
-import sys
 
 import matplotlib.pyplot as plt
 import skimage
@@ -59,7 +58,7 @@ def train(modelname, max_iter, snapshot, dataset, weights, setname, mu):
 
     for n_iter in range(max_iter):
 
-        im, mask, sent, text = data_loader.get_img_data(is_train=True)
+        _, _, im, mask, sent, text = data_loader.get_img_data(is_train=True)
         im = im.astype(np.float32)
         mask = np.expand_dims(mask.astype(np.float32), axis=2)
 
@@ -133,7 +132,7 @@ def test(modelname, iter, dataset, visualize, weights, setname, dcrf, mu):
     snapshot_restorer.restore(sess, pretrained_model)
 
     while not data_loader.is_end:
-        im, mask, sent, text = data_loader.get_img_data(rand=False, is_train=False)
+        _, _, im, mask, sent, text = data_loader.get_img_data(rand=False, is_train=False)
         mask = mask.astype(np.float32)
 
         proc_im = skimage.img_as_ubyte(im_processing.resize_and_pad(im, H, W))
