@@ -27,19 +27,19 @@ class RMIRefVGLoader(RefVGLoader):
 
     def get_img_data(self, rand=True, is_train=True):
         if rand:
-            img_id = np.random.choice(self.ref_img_ids)
+            img_id = np.random.choice(self.img_ids)
             ref_data = self.get_img_ref_data(img_id)
             task_idx = np.random.choice(range(len(ref_data['phrases'])))
             task_id = ref_data['task_ids'][task_idx]
         else:
-            img_id = self.ref_img_ids[self.img_idx]
+            img_id = self.img_ids[self.img_idx]
             ref_data = self.get_img_ref_data(img_id)
             task_idx = self.img_task_idx
             task_id = ref_data['task_ids'][task_idx]
             if task_idx == len(ref_data['phrases']) - 1:
                 self.img_idx += 1
                 self.img_task_idx = 0
-                if self.img_idx == len(self.ref_img_ids):
+                if self.img_idx == len(self.img_ids):
                     self.is_end = True
             else:
                 self.img_task_idx += 1
