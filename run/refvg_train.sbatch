@@ -1,9 +1,9 @@
 #!/bin/bash
 #
-#SBATCH --job-name=refvg_1080
-#SBATCH --output=_rmi/train_refvg.out  # output file
-#SBATCH -e _rmi/train_refvg.err        # File to which STDERR will be written
-#SBATCH --mem=20480
+#SBATCH --job-name=trmi
+#SBATCH --output=_rmi/train_refvg_rmi.out  # output file
+#SBATCH -e _rmi/train_refvg_rmi.err        # File to which STDERR will be written
+#SBATCH --mem=40000
 #SBATCH --partition=1080ti-long # Partition to submit to
 #SBATCH --gres=gpu:1
 #SBATCH --ntasks=1
